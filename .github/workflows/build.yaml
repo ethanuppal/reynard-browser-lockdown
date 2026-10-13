@@ -108,7 +108,7 @@ jobs:
         run: brew install ldid
 
       - name: Build app
-        run: cd reynard-browser && ./tools/release/build-app.sh --nightly
+        run: cd reynard-browser && ./tools/release/build-app.sh --nightly --no-signing
 
       - name: Create IPA
         run: cd reynard-browser && ./tools/release/create-ipa.sh
