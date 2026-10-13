@@ -19,7 +19,7 @@ const altSource = /** @type {AltSource} */ ({
 		{
 			name: "Reynard Browser",
 			bundleIdentifier: bundleID,
-			developerName: "Minh Ton",
+			developerName: "Minh Ton, Ethan Uppal, Joshua Chan",
 			subtitle: "An experimental Gecko-based web browser for iOS 13+.",
 			localizedDescription:
 				"Modification of Reynard browser allowing JIT during runtime with Lockdown mode enabled. Reynard is a Gecko-based mobile web browser for iOS 13+.\n\nUnlike other browsers on iOS that are forced to use Apple's WebKit engine (including Safari and all third-party browsers), Reynard uses Gecko. This is the same engine that powers the Firefox browser on desktop and Android devices.\n\nThis is mainly for users on older iOS versions who are stuck with an outdated version of WebKit. Because WebKit is bundled with the OS, these devices cannot receive engine updates and often fail to load modern websites. By using Gecko which is kept up to date independently, Reynard allows these sites to work again. Users on newer iOS versions can also use the browser if they want an alternative browser engine on their device.\n\nSource code is available on GitHub at https://github.com/minh-ton/reynard-browser.",
@@ -74,7 +74,7 @@ altSource.apps[0].versions = origAltSource.apps[0].versions.filter((appVersion) 
 
 // Replace their repo id with ours
 for (const appVersion of altSource.apps[0].versions) {
-	appVersion.downloadURL.replace("minh-ton/reynard-browser", repoID);
+	appVersion.downloadURL = appVersion.downloadURL.replace("minh-ton/reynard-browser", repoID);
 }
 
 process.stdout.write(JSON.stringify(altSource));
