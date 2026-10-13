@@ -36,6 +36,7 @@ jobs:
           # FIXME: handle when we change patches on the same version
           cd ..
           pwd
+          git ls-remote --tags origin $REYNARD_VERSION
           git ls-remote --tags origin $REYNARD_VERSION | grep -q $REYNARD_VERSION && { gh run cancel ${{ github.run_id }}; exit 1; }
 
       - name: Merge additional patches
