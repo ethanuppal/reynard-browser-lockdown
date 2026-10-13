@@ -137,7 +137,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
-          tag_name: $REYNARD_VERSION
+          tag_name: ${{ env.REYNARD_VERSION }}
           files: reynard-browser/dist/Reynard.ipa
 
   update:
