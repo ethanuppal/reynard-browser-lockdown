@@ -9,59 +9,12 @@ permissions:
   contents: read
 
 jobs:
-  prepare:
-    if: ${{ github.repository_owner == 'ethanuppal' }}
-    name: Select build variants
-    runs-on: ubuntu-latest
-    steps:
-      - name: Select matrix
-        id: matrix
-        uses: actions/github-script@v9
-        env:
-          BUILD_NORMAL_IPA: "true"
-          BUILD_TROLLSTORE_TIPA: "false"
-          BUILD_JAILBROKEN_IPA: "false"
-        with:
-          script: |
-            const variants = [];
-
-            if (
-              process.env.BUILD_NORMAL_IPA === 'true' ||
-              process.env.BUILD_TROLLSTORE_TIPA === 'true'
-            ) {
-              variants.push({
-                variant: 'standard',
-                build_args: '--use-sccache --auto-clobber',
-                sccache_namespace: 'standard',
-              });
-            }
-
-            if (
-              process.env.BUILD_JAILBROKEN_IPA === 'true'
-            ) {
-              variants.push({
-                variant: 'nojemalloc',
-                build_args: '--disable-jemalloc --use-sccache --auto-clobber',
-                sccache_namespace: 'nojemalloc',
-              });
-            }
-
-            console.log(variants)
-
-            core.setOutput('matrix', JSON.stringify({ include: variants }));
-            core.setOutput('should_build', "true");
-
   build:
-    needs: prepare
-    # if: ${{ needs.prepare.outputs.should_build == 'true' }}
     name: Build Standard
     runs-on: macos-26
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
     env:
       SCCACHE_GHA_ENABLED: "true"
-      SCCACHE_GHA_VERSION: ${{ matrix.sccache_namespace }}
+      SCCACHE_GHA_VERSION: standard
 
     steps:
       - name: Check out repository
@@ -118,9 +71,9 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             ~/.mozbuild
-          key: buildcache-gecko-deps-${{ matrix.variant }}-${{ steps.rust_toolchain.outputs.hash }}-${{ hashFiles('engine/release.txt') }}
+          key: buildcache-gecko-deps-standard-${{ steps.rust_toolchain.outputs.hash }}-${{ hashFiles('engine/release.txt') }}
           restore-keys: |
-            buildcache-gecko-deps-${{ matrix.variant }}-${{ steps.rust_toolchain.outputs.hash }}-
+            buildcache-gecko-deps-standard-${{ steps.rust_toolchain.outputs.hash }}-
 
       - name: Restore idevice build cache
         uses: actions/cache@v4
@@ -140,7 +93,7 @@ jobs:
           CC: clang
           CXX: clang++
           LD: ld64.lld
-        run: cd reynard-browser && ./tools/development/build-gecko.sh ${{ matrix.build_args }}
+        run: cd reynard-browser && ./tools/development/build-gecko.sh --use-sccache --auto-clobber
 
       - name: Build idevice support library
         run: cd reynard-browser && ./tools/development/build-idevice.sh
