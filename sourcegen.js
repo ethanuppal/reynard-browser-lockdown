@@ -12,7 +12,7 @@ const altSource = /** @type {AltSource} */ ({
 	name: "Reynard Browser",
 	identifier: bundleID,
 	website: `https://github.com/${repoID}`,
-	subtitle: "Official AltStore Source for Reynard Browser",
+	subtitle: "AltStore Source for a Reynard Browser (Lockdown) Fork",
 	description: "An experimental Gecko-based web browser for iOS 13+.",
 	tintColor: "#FB3728",
 	iconURL: "https://github.com/user-attachments/assets/1c42dda2-b778-4342-9f94-8f852c3ad652",
