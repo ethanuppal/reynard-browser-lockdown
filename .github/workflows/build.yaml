@@ -131,3 +131,14 @@ jobs:
           name: Reynard.ipa
           path: reynard-browser/dist/Reynard.ipa
           if-no-files-found: error
+
+      - name: Generate AltSource
+        run: node sourcegen.js ethanuppal/reynard-browser-lockdown com.minh-ton.Reynard > source.json
+
+      - name: Upload AltSource
+        uses: test-room-7/action-update-file@v1
+        with:
+          file-path: source.json
+          commit-msg: Update AltSource
+          branch: docs
+          github-token: ${{ secrets.GITHUB_TOKEN }}
