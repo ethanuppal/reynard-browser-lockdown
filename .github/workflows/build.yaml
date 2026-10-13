@@ -46,9 +46,10 @@ jobs:
 
       - name: Initialize submodules
         run: |
-          cd reynard-browser && git submodule sync --recursive
-          cd reynard-browser && git submodule update --init --recursive support/idevice
-          cd reynard-browser && git submodule update --init --depth 1 engine/firefox
+          cd reynard-browser
+          git submodule sync --recursive
+          git submodule update --init --recursive support/idevice
+          git submodule update --init --depth 1 engine/firefox
 
       - name: Update Gecko source
         run: cd reynard-browser && ./tools/development/update-gecko.sh
