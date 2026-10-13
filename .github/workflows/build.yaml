@@ -36,7 +36,13 @@ jobs:
           # FIXME: handle when we change patches on the same version
           cd ..
           # pwd
-          git ls-remote --tags origin $REYNARD_VERSION | grep -q $REYNARD_VERSION && { gh run cancel ${{ github.run_id }}; exit 1; }
+          git ls-remote --tags origin $REYNARD_VERSION | grep -q $REYNARD_VERSION && { \
+            echo "Version $REYNARD_VERSION already has a release in ethanuppal/reynard-browser-lockdown" \
+            gh run cancel ${{ github.run_id }}; \
+            exit 1; \
+          } || { \
+            echo "Version $REYNARD_VERSION does not have a release ethanuppal/reynard-browser-lockdown, building one" \
+          }
 
       - name: Merge additional patches
         run: |
