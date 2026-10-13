@@ -3,6 +3,12 @@
 This disables the lockdown mode check for JIT in Reynard Browser.
 It is useful for those who use lockdown mode not to avoid cyberattacks but to safely stay on older versions of iOS, where the main issue is WebKit becoming outdated.
 
+<h3 align="center">
+<a href="https://altdirect.app/?url=https://www.ethanuppal.com/reynard-browser-lockdown/source.json" target="_blank"><img src="https://altdirect.app/assets/png/AltSource_Blue.png" alt="Add AltSource" width="200"></a>
+&nbsp;
+<a href="https://github.com/ethanuppal/reynard-browser-lockdown/releases/latest/" target="_blank"><img src="https://altdirect.app/assets/png/Download_Blue.png" alt="Download .ipa" width="200"></a>
+</h3>
+
 The submodule [`reynard-browser`](./reynard-browser/) is just a convenience.
 The [build workflow](./.github/workflows/build.yaml) automatically checks out the latest nightly Reynard in the submodule on a cron job and builds it.
 
