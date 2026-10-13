@@ -49,7 +49,7 @@ jobs:
             console.log(variants)
 
             core.setOutput('matrix', JSON.stringify({ include: variants }));
-            core.setOutput('should_build', String(variants.length > 0));
+            core.setOutput('should_build', "true");
 
   build:
     needs: prepare
@@ -67,7 +67,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.checkout_ref }}
           fetch-depth: 0
           submodules: false
 
