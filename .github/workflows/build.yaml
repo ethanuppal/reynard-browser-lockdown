@@ -28,6 +28,7 @@ jobs:
           git submodule update --init --depth 1
           cd reynard-browser
           REYNARD_VERSION=$(git describe --tags --abbrev=0)
+          git fetch origin
           git fetch origin $REYNARD_VERSION
           git checkout $REYNARD_VERSION
 
