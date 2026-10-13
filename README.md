@@ -9,3 +9,6 @@ The [build workflow](./.github/workflows/build.yaml) automatically checks out th
 TODO:
 - It should see if it already published the latest version and skip
 - Add an additional patches folder whose contents are copied into the Reynard patches before building
+
+BIG TODO:
+- It would be nice if we could have a global or per site toggle like Safari does
