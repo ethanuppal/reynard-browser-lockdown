@@ -1,0 +1,3 @@
+[submodule "reynard-browser"]
+	path = reynard-browser
+	url = https://github.com/minh-ton/reynard-browser
