@@ -46,6 +46,8 @@ jobs:
               });
             }
 
+            console.log(variants)
+
             core.setOutput('matrix', JSON.stringify({ include: variants }));
             core.setOutput('should_build', String(variants.length > 0));
 
