@@ -1,0 +1,16 @@
+diff --git a/js/xpconnect/src/nsXPConnect.cpp b/js/xpconnect/src/nsXPConnect.cpp
+index e9b93e5e8d..2b0f7a3fa8 100644
+--- a/js/xpconnect/src/nsXPConnect.cpp
++++ b/js/xpconnect/src/nsXPConnect.cpp
+@@ -101,11 +101,6 @@ static void InitJSEngine() {
+       mozilla::StaticPrefs::javascript_options_main_process_disable_jit()) {
+     JS::DisableJitBackend();
+   }
+-#ifdef XP_IOS
+-  else if (IsLockdownModeEnabled()) {
+-    JS::DisableJitBackend();
+-  }
+-#endif
+ 
+   // Set all JS::Prefs.
+   SET_JS_PREFS_FROM_BROWSER_PREFS;

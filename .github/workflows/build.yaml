@@ -32,6 +32,10 @@ jobs:
           git fetch origin $REYNARD_VERSION
           git checkout $REYNARD_VERSION
 
+      - name: Merge additional patches
+        run: |
+          cp -r ./additional-patches/ reynard-browser/patches
+
       - name: Set up latest Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
