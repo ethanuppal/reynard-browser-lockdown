@@ -41,7 +41,7 @@ jobs:
             gh run cancel ${{ github.run_id }}; \
             exit 1; \
           } || { \
-            echo "Version $REYNARD_VERSION does not have a release ethanuppal/reynard-browser-lockdown, building one" \
+            echo "Version $REYNARD_VERSION does not have a release ethanuppal/reynard-browser-lockdown, building one"; \
           }
 
       - name: Merge additional patches
