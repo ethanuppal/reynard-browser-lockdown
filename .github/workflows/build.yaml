@@ -53,7 +53,7 @@ jobs:
 
   build:
     needs: prepare
-    if: ${{ needs.prepare.outputs.should_build == 'true' }}
+    # if: ${{ needs.prepare.outputs.should_build == 'true' }}
     name: Build Standard
     runs-on: macos-26
     strategy:
