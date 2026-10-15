@@ -12,6 +12,8 @@ jobs:
   build:
     name: Build Standard
     runs-on: macos-26
+    outputs:
+      size: ${{ steps.calcipasize.outputs.size }}
     env:
       SCCACHE_GHA_ENABLED: "true"
       SCCACHE_GHA_VERSION: standard
@@ -134,6 +136,10 @@ jobs:
           path: reynard-browser/dist/Reynard.ipa
           if-no-files-found: error
 
+      - name: Calculate IPA size
+        id: calcipasize
+        run: echo "size=$(wc -c < reynard-browser/dist/Reynard.ipa)" >> "$GITHUB_OUTPUT"
+
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
@@ -157,7 +163,7 @@ jobs:
           ref: 'docs'
 
       - name: Generate AltSource
-        run: node sourcegen.js ethanuppal/reynard-browser-lockdown com.minh-ton.Reynard > source.json
+        run: node sourcegen.js ethanuppal/reynard-browser-lockdown com.minh-ton.Reynard ${{ needs.build.outputs.size }} > source.json
 
       - name: Upload AltSource
         run: |
