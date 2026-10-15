@@ -1,10 +1,11 @@
 const repoID = process.argv[2]
 const bundleID = process.argv[3]
+const size = process.argv[4]
 const firstVersion = [0, 17, 1]
 
-if (!repoID || !bundleID) {
-	console.error("repoID or bundleID missing");
-	console.error("usage: node sourcegen.js user/repo com.bundle.id");
+if (!repoID || !bundleID || !size) {
+	console.error("repoID, bundleID, or size missing");
+	console.error("usage: node sourcegen.js user/repo com.bundle.id size");
 }
 
 const altSource = /** @type {AltSource} */ ({
@@ -76,6 +77,8 @@ altSource.apps[0].versions = origAltSource.apps[0].versions.filter((appVersion) 
 // Replace their repo id with ours
 for (const appVersion of altSource.apps[0].versions) {
 	appVersion.downloadURL = appVersion.downloadURL.replace("minh-ton/reynard-browser", repoID);
+	// MUST REFACTOR FOR THIS!
+	appVersion.size = parseInt(size)
 }
 
 process.stdout.write(JSON.stringify(altSource));
