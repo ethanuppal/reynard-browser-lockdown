@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
           submodules: false
@@ -54,7 +54,7 @@ jobs:
           cp -r ./additional-patches/ reynard-browser/patches
 
       - name: Set up latest Xcode
-        uses: maxim-lobanov/setup-xcode@v1
+        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
         with:
           xcode-version: '26.6'
 
@@ -88,7 +88,7 @@ jobs:
         run: echo "hash=$(rustc -Vv | shasum -a 256 | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
 
       - name: Restore Gecko dependency cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: |
             ~/.cargo/registry
@@ -97,9 +97,10 @@ jobs:
           key: buildcache-gecko-deps-standard-${{ steps.rust_toolchain.outputs.hash }}-${{ hashFiles('engine/release.txt') }}
           restore-keys: |
             buildcache-gecko-deps-standard-${{ steps.rust_toolchain.outputs.hash }}-
+          lookup-only: true
 
       - name: Restore idevice build cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: |
             reynard-browser/support/idevice/target
@@ -107,9 +108,10 @@ jobs:
           key: buildcache-idevice-${{ steps.rust_toolchain.outputs.hash }}-${{ hashFiles('reynard-browser/support/idevice/Cargo.lock', 'reynard-browser/support/idevice/Cargo.toml', 'reynard-browser/tools/development/build-idevice.sh') }}
           restore-keys: |
             buildcache-idevice-${{ steps.rust_toolchain.outputs.hash }}-
+          lookup-only: true
 
       - name: Set up sccache
-        uses: mozilla-actions/sccache-action@v0.0.11
+        uses: mozilla-actions/sccache-action@fc920bf0ec8de6ee65d409111f7ec508035751ba # v0.0.11
 
       - name: Build Gecko
         env:
@@ -131,7 +133,7 @@ jobs:
         run: cd reynard-browser && ./tools/release/create-ipa.sh
 
       - name: Upload IPA
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: Reynard.ipa
           path: reynard-browser/dist/Reynard.ipa
@@ -142,7 +144,7 @@ jobs:
         run: echo "size=$(wc -c < reynard-browser/dist/Reynard.ipa)" >> "$GITHUB_OUTPUT"
 
       - name: Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           tag_name: ${{ env.REYNARD_VERSION }}
           files: reynard-browser/dist/Reynard.ipa
@@ -157,14 +159,17 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
           submodules: false
           ref: 'docs'
+          persist-credentials: false
 
       - name: Generate AltSource
-        run: node sourcegen.js ethanuppal/reynard-browser-lockdown com.minh-ton.Reynard ${{ needs.build.outputs.size }} > source.json
+        run: node sourcegen.js ethanuppal/reynard-browser-lockdown com.minh-ton.Reynard ${NEEDS_BUILD_OUTPUTS_SIZE} > source.json
+        env:
+          NEEDS_BUILD_OUTPUTS_SIZE: ${{ needs.build.outputs.size }}
 
       - name: Upload AltSource
         run: |
