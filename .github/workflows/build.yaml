@@ -164,7 +164,6 @@ jobs:
           fetch-depth: 0
           submodules: false
           ref: 'docs'
-          persist-credentials: false
 
       - name: Generate AltSource
         run: node sourcegen.js ethanuppal/reynard-browser-lockdown com.minh-ton.Reynard ${NEEDS_BUILD_OUTPUTS_SIZE} > source.json
