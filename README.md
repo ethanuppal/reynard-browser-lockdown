@@ -17,8 +17,8 @@ The submodule [`reynard-browser`](./reynard-browser/) is just a convenience.
 The [build workflow](./.github/workflows/build.yaml) automatically checks out the latest nightly Reynard in the submodule on a cron job and builds it.
 
 IMPORTANT TODO:
-- [ ] Pin all the workflow actions to commit hash
-- [ ] Run `zizmor` to make sure everything is ok
+- [x] Pin all the workflow actions to commit hash (except rust-toolchain)
+- [x] Run `zizmor` to make sure everything is ok
 
 TODO:
 - [x] It should see if it already published the latest version and skip
