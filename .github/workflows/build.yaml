@@ -31,7 +31,7 @@ jobs:
           git submodule update --init --depth 1
           cd reynard-browser
           git fetch --tags
-          REYNARD_VERSION=$(git describe --tags --abbrev=0)
+          REYNARD_VERSION=$(git tag --sort version:refname | tail -n2 | head -n1)
           echo "REYNARD_VERSION=$REYNARD_VERSION" >> $GITHUB_ENV
           git fetch origin $REYNARD_VERSION
           git checkout $REYNARD_VERSION
